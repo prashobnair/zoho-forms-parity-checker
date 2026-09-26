@@ -1,0 +1,23 @@
+{
+  "source_fields":[
+    {"name":"name","type":"text","required":true},
+    {"name":"service","type":"select","required":true,"options":["audit","delivery"]},
+    {"name":"seats","type":"number"},
+    {"name":"rate","type":"number"},
+    {"name":"estimate","type":"calculated","operation":"multiply","sources":["seats","rate"],"visible_if":{"service":"delivery"}},
+    {"name":"details","type":"text","required":true,"visible_if":{"service":"audit"}}
+  ],
+  "target_fields":[
+    {"name":"name","type":"text","required":true},
+    {"name":"service","type":"select","required":true,"options":["audit","delivery"]},
+    {"name":"seats","type":"number"},
+    {"name":"rate","type":"number"},
+    {"name":"estimate","type":"calculated","operation":"add","sources":["seats","rate"],"visible_if":{"service":"delivery"}},
+    {"name":"details","type":"text","required":true,"visible_if":{"service":"audit"}}
+  ],
+  "cases":[
+    {"name":"audit_complete","answers":{"name":"Fictional Co","service":"audit","details":"Fictional audit"}},
+    {"name":"delivery_calculation","answers":{"name":"Fictional Co","service":"delivery","seats":3,"rate":200}},
+    {"name":"audit_missing_details","answers":{"name":"Fictional Co","service":"audit"}}
+  ]
+}
